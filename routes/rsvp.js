@@ -5,7 +5,7 @@ const requireLogin  = require('./requireLogin')
 const Post =  require('../models/daily-verses')
 
 
-router.get('/allpost',(req,res)=>{
+router.get('/allpost', requireLogin, (req,res)=>{
     Post.find()
     .populate("postedBy","_id name")
     .populate("comments.postedBy","_id name")
@@ -18,7 +18,7 @@ router.get('/allpost',(req,res)=>{
     
 })
 
-router.get('/getsubpost',requireLogin,(req,res)=>{
+router.get('/getsubpost',requireLogin, (req,res)=>{
 
     // if postedBy in following
     Post.find({postedBy:{$in:req.user.following}})

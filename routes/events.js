@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../../models/events-model');
+import { verifyTokenAndAuthorization } from './verifyToken';
 
 // CREATE a new Wysiwygannouncement
 router.post('/', async (req, res) => {
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
 });
 
 // READ all Wysiwygannouncements
-router.get('/', async (req, res) => {
+router.get('/', verifyTokenAndAuthorization, async (req, res) => {
   try {
     const events = await Event.find();
     res.status(200).json({ success: true, message: 'announcements retrieved successfully', data: events });
@@ -31,7 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 // READ a single Wysiwygannouncement by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id',verifyTokenAndAuthorization, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     res.status(200).json({ success: true, message: 'announcement retrieved successfully', data: event });
@@ -41,7 +42,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // UPDATE a Wysiwygannouncement by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id',verifyTokenAndAuthorization, async (req, res) => {
   try {
     const event = await Event.findByIdAndUpdate(req.params.id, {
       title: req.body.title,
@@ -54,7 +55,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a Wysiwygannouncement by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',verifyTokenAndAuthorization, async (req, res) => {
   try {
     await Event.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: 'announcement deleted successfully' });

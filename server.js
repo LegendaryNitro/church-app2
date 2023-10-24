@@ -11,7 +11,9 @@ const rsvpRoute = require("./routes/rsvp");
 const sermonRoute = require("./routes/sermons");
 const stripeRoute = require("./routes/stripe");
 const userRoute = require("./routes/user");
-const RoomRoute = require("./routes/roomRoute");
+
+
+const chatRoute = require("./routes/chat-route");
 
 dotenv.config();
 const app = express();
@@ -44,7 +46,9 @@ app.use("/api/rsvp", rsvpRoute);
 app.use("/api/sermon", sermonRoute);
 app.use("/api/donations", stripeRoute);
 app.use("/api/user", userRoute);
-app.use("/api/room", RoomRoute);
+
+
+app.use("/api/chat", chatRoute);
 
 io.on("join-room", ({ roomId, userId }) => {
   if (rooms[roomId]) {

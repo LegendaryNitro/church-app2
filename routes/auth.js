@@ -1,3 +1,4 @@
+const  verifyTokenAndAuthorization = require("./verifyToken");
 const router = require("express").Router();
 const UserMVELI = require("../models/user-model");
 const CryptoJS = require("crypto-js");
